@@ -8,7 +8,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by edu on 23/11/2016.
  */
-public abstract class BaseApiClient<T extends BaseApiInterface> {
+public abstract class BaseApiClient<T> {
 
     protected final String url;
 
