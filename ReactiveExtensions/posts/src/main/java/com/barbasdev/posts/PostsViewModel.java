@@ -20,9 +20,6 @@ import java.util.List;
 
 public class PostsViewModel extends BaseViewModel implements SubscriberCallback<List<Post>> {
 
-    private static final String TAG = PostsViewModel.class.getSimpleName();
-
-    private WeakReference<Activity> activityWeakReference = new WeakReference<>(null);
     private String text;
 
     public PostsViewModel(Activity activity) {
@@ -66,7 +63,7 @@ public class PostsViewModel extends BaseViewModel implements SubscriberCallback<
 
     public void setText(String text) {
         this.text = text;
-        notifyPropertyChanged(com.barbasdev.posts.BR.text);
+        notifyPropertyChanged(BR.text);
     }
 
     public View.OnClickListener getOnClickListener() {

@@ -19,9 +19,6 @@ import java.lang.ref.WeakReference;
 
 public class MoviesViewModel extends BaseViewModel implements SubscriberCallback<MovieResults> {
 
-    private static final String TAG = MoviesViewModel.class.getSimpleName();
-
-    private WeakReference<Activity> activityWeakReference = new WeakReference<>(null);
     private String text;
 
     public MoviesViewModel(Activity activity) {
