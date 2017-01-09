@@ -4,6 +4,7 @@ import com.barbasdev.common.datalayer.model.ApiResult;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by edu on 24/11/2016.
@@ -13,10 +14,14 @@ public class Post extends RealmObject implements ApiResult {
 
     @SerializedName("userId")
     private int userId;
+
+    @PrimaryKey
     @SerializedName("id")
     private int id;
+
     @SerializedName("title")
     private String title;
+
     @SerializedName("body")
     private String body;
 

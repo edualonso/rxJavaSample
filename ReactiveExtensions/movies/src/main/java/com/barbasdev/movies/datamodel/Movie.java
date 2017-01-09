@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by edu on 20/11/2016.
@@ -15,30 +16,44 @@ public class Movie extends RealmObject implements ApiResult {
 
     @SerializedName("poster_path")
     private String posterPath;
+
     @SerializedName("adult")
     private Boolean adult;
+
     @SerializedName("overview")
     private String overview;
+
     @SerializedName("release_date")
     private String releaseDate;
+
     @SerializedName("genre_ids")
     private List<Integer> genreIds = new ArrayList<Integer>();
+
     @SerializedName("id")
+    @PrimaryKey
     private Integer id;
+
     @SerializedName("original_title")
     private String originalTitle;
+
     @SerializedName("original_language")
     private String originalLanguage;
+
     @SerializedName("title")
     private String title;
+
     @SerializedName("backdrop_path")
     private String backdropPath;
+
     @SerializedName("popularity")
     private Float popularity;
+
     @SerializedName("vote_count")
     private Integer voteCount;
+
     @SerializedName("video")
     private Boolean video;
+
     @SerializedName("vote_average")
     private Float voteAverage;
 
