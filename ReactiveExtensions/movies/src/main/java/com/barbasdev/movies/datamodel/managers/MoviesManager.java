@@ -30,4 +30,8 @@ public class MoviesManager implements ResultsManager<MovieResults, MovieResultsS
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResultsSubscriber);
     }
+
+    public Observable<MovieResults> getResults() {
+        return MoviesApiClient.getInstance().getService().getTopRatedMovies(MoviesApiClient.API_KEY);
+    }
 }

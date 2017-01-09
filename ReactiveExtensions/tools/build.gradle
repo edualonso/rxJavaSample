@@ -40,4 +40,6 @@ dependencies {
 
     // module dependencies
     compile project(':common')
+    compile project(':movies')          // FIXME: REMOVE THIS!!!
+    compile project(':posts')           // FIXME: REMOVE THIS!!!
 }

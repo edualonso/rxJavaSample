@@ -32,4 +32,9 @@ public class PostsManager implements ResultsManager<List<Post>, PostResultsSubsc
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(postsSubscriber);
     }
+
+    @Override
+    public Observable<List<Post>> getResults() {
+        return PostsApiClient.getInstance().getService().getUserPosts(1);
+    }
 }

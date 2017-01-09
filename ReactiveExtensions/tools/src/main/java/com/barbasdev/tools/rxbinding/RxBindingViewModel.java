@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference;
  * Created by edu on 09/01/2017.
  */
 
-public class RxBindingViewModel extends BaseViewModel {
+public class RxBindingViewModel extends BaseViewModel<RxBindingFragment> {
 
     private String text;
 
@@ -60,6 +60,10 @@ public class RxBindingViewModel extends BaseViewModel {
         this.text = text;
         notifyPropertyChanged(BR.text);
     }
+
+//    public View.OnClickListener getOnClickListener() {
+//        fragmentView.getView(R.id.rxBindingButton);
+//    }
 
     @Override
     public int describeContents() {
