@@ -20,16 +20,6 @@ public class PostResultsSubscriber extends ApiResultSubscriber<List<Post>> {
     }
 
     @Override
-    public void onCompleted() {
-        Log.d(TAG, "----------> onCompleted");
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        Log.d(TAG, "----------> onError");
-    }
-
-    @Override
     public void onNext(List<Post> postList) {
         Log.d(TAG, "----------> onNext");
         subscriberCallback.processResult(postList);

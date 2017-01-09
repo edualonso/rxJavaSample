@@ -16,16 +16,6 @@ public class MovieResultsSubscriber extends ApiResultSubscriber<MovieResults> {
     }
 
     @Override
-    public void onCompleted() {
-        Timber.d("----------> onCompleted");
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        Timber.e("----------> onError: " + e.getMessage());
-    }
-
-    @Override
     public void onNext(MovieResults results) {
         Timber.d("----------> onNext");
         subscriberCallback.processResult(results);
