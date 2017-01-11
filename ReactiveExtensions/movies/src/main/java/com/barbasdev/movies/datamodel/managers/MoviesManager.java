@@ -1,18 +1,22 @@
 package com.barbasdev.movies.datamodel.managers;
 
 import com.barbasdev.common.datalayer.model.managers.ResultsManager;
+import com.barbasdev.movies.datamodel.Movie;
 import com.barbasdev.movies.datamodel.MovieResults;
 import com.barbasdev.movies.network.MoviesApiClient;
 import com.barbasdev.movies.network.subscribers.MovieResultsSubscriber;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by edu on 23/11/2016.
  */
-public class MoviesManager implements ResultsManager<MovieResults, MovieResultsSubscriber> {
+public class MoviesManager implements ResultsManager<List<Movie>, MovieResultsSubscriber> {
 
     private static MoviesManager instance;
 
@@ -25,13 +29,31 @@ public class MoviesManager implements ResultsManager<MovieResults, MovieResultsS
 
     @Override
     public void getResults(MovieResultsSubscriber movieResultsSubscriber) {
-        Observable<MovieResults> call = MoviesApiClient.getInstance().getService().getTopRatedMovies(MoviesApiClient.API_KEY);
-        call.subscribeOn(Schedulers.io())
+        getMovieListObservable().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(movieResultsSubscriber);
+                .subscribe();
     }
 
-    public Observable<MovieResults> getResults() {
-        return MoviesApiClient.getInstance().getService().getTopRatedMovies(MoviesApiClient.API_KEY);
+    @Override
+    public Observable<List<Movie>> getResults() {
+        return getMovieListObservable();
+    }
+
+    /**
+     * Converts the output from the service, that comes out as an Observable<MovieResults> to
+     * Observable<List<Movie>> for convenience.
+     *
+     * @return right type of observable
+     */
+    private Observable<List<Movie>> getMovieListObservable() {
+        return MoviesApiClient.getInstance().getService().getTopRatedMoviesObservable(MoviesApiClient.API_KEY)
+                .flatMapIterable(new Function<MovieResults, List<Movie>>() {
+                    @Override
+                    public List<Movie> apply(MovieResults movieResults) throws Exception {
+                        return movieResults.getResults();
+                    }
+                })
+                .toList()
+                .toObservable();
     }
 }

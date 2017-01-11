@@ -7,9 +7,9 @@ import com.barbasdev.posts.network.subscribers.PostResultsSubscriber;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by edu on 23/11/2016.
@@ -27,7 +27,7 @@ public class PostsManager implements ResultsManager<List<Post>, PostResultsSubsc
 
     @Override
     public void getResults(PostResultsSubscriber postsSubscriber) {
-        Observable<List<Post>> call = PostsApiClient.getInstance().getService().getUserPosts(1);
+        Observable<List<Post>> call = PostsApiClient.getInstance().getService().getUserPostsObservable(1);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(postsSubscriber);
@@ -35,6 +35,6 @@ public class PostsManager implements ResultsManager<List<Post>, PostResultsSubsc
 
     @Override
     public Observable<List<Post>> getResults() {
-        return PostsApiClient.getInstance().getService().getUserPosts(1);
+        return PostsApiClient.getInstance().getService().getUserPostsObservable(1);
     }
 }

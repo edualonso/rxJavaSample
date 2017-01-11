@@ -9,17 +9,19 @@ import android.view.View;
 import com.barbasdev.common.base.BaseViewModel;
 import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
 import com.barbasdev.movies.datamodel.Movie;
-import com.barbasdev.movies.datamodel.MovieResults;
+import com.barbasdev.movies.datamodel.managers.MoviesManager;
 import com.barbasdev.posts.datamodel.Post;
+import com.barbasdev.posts.datamodel.managers.PostsManager;
 import com.barbasdev.tools.BR;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -76,45 +78,40 @@ public class RxBindingViewModel extends BaseViewModel<RxBindingFragment> impleme
 
     public View.OnClickListener getOnClickListener() {
         return view -> {
-//            Func2<MovieResults, List<Post>, List<String>> zipFunction = (movieResults, postResults) -> getMoviesAndPosts(movieResults, postResults);
-//            Observable.zip(MoviesManager.getInstance().getResults(), PostsManager.getInstance().getResults(), zipFunction)
+            Observable<List<Movie>> movieResultsObservable = MoviesManager.getInstance().getResults();
+            Observable<List<Post>> postResultsObservable = PostsManager.getInstance().getResults();
+            BiFunction<List<Movie>, List<Post>, List<String>> combineLambda = (movieResults, postResults) -> getMoviesAndPosts(movieResults, postResults);
+
+            Observable.zip(movieResultsObservable, postResultsObservable, combineLambda)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RxBindingSubscriber(this));
+
+            /*
+             * RxJava1 implementation (note Func2 instead of BiFunction)
+             */
+//            Func2<MovieResults, List<Post>, List<String>> combineLambda = (movieResults, postResults) -> getMoviesAndPosts(movieResults, postResults);
+//            Observable<MovieResults> movieResultsObservable = MoviesManager.getInstance().getResults();
+//            Observable<List<Post>> postResultsObservable = PostsManager.getInstance().getResults();
+//
+//            Observable.zip(movieResultsObservable, postResultsObservable, combineLambda)
 //                    .subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
 //                    .subscribe(new RxBindingSubscriber(this));
 
-//            Observable.range(1,10)
-//                    .flatMap(new Func1<Integer, Observable<Integer>>() {
-//                        @Override
-//                        public Observable<Integer> call(Integer v) {
-//                            return Observable.range(v, 2);
-//                        }
-//                    })
-//                    .subscribe(new Action1<Integer>() {
-//                        @Override
-//                        public void call(Integer value) {
-//                            Timber.e("Value: " + value);
-//                        }
-//                    });
-
-            Observable.range(1, 10)
-                    .map(new Func1<Integer, Integer>() {
-                        @Override
-                        public Integer call(Integer value) {
-                            return value * value;
-                        }
-                    })
-                    .flatMap(new Func1<Integer, Observable<Integer>>() {
-                        @Override
-                        public Observable<Integer> call(Integer value) {
-                            return Observable.range(value, 2);
-                        }
-                    })
-                    .subscribe(new Action1<Integer>() {
-                        @Override
-                        public void call(Integer value) {
-                            Timber.e("Value: " + value);
-                        }
-                    });
+//            Timber.e("CLASSIC IMPLEMENTATION");
+//            for (int i = 1; i <= 10; i++) {
+//                int value = i * i;
+//                for (int j = 0; j < 2; j++) {
+//                    Timber.e("Value: " + (value + j));
+//                }
+//            }
+//
+//            Timber.e("REACTIVE IMPLEMENTATION");
+//            Observable.range(1, 10)
+//                    .map(value -> value * value)
+//                    .flatMap(value -> Observable.range(value, 2))
+//                    .subscribe(value -> Timber.e("Value: " + value));
         };
     }
 
@@ -126,9 +123,9 @@ public class RxBindingViewModel extends BaseViewModel<RxBindingFragment> impleme
     }
 
     @NonNull
-    private List<String> getMoviesAndPosts(MovieResults movieResults, List<Post> postResults) {
+    private List<String> getMoviesAndPosts(List<Movie> movieResults, List<Post> postResults) {
         List<String> moviesAndPosts = new ArrayList<>();
-        for (Movie movie : movieResults.getResults()) {
+        for (Movie movie : movieResults) {
             moviesAndPosts.add(movie.getTitle());
         }
         moviesAndPosts.add("*** -------------------- *** -------------------- ***");

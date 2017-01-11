@@ -2,13 +2,13 @@ package com.barbasdev.common.network.subscribers;
 
 import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
 import timber.log.Timber;
 
 /**
  * Created by edu on 23/11/2016.
  */
-public abstract class ApiResultSubscriber<T> extends Subscriber<T> {
+public abstract class ApiResultSubscriber<T> implements Observer<T> {
 
     protected SubscriberCallback subscriberCallback;
 
@@ -17,7 +17,7 @@ public abstract class ApiResultSubscriber<T> extends Subscriber<T> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         // override in children classes
         Timber.e("----------> onCompleted");
     }
