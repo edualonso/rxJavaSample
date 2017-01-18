@@ -15,12 +15,12 @@ public abstract class BaseViewModel<V extends BaseFragmentView> extends BaseObse
     protected WeakReference<Activity> activityWeakReference = new WeakReference<>(null);
     protected V fragmentView;
 
-    public abstract void onCreate();
-    public abstract void onStart();
-    public abstract void onResume();
-    public abstract void onPause();
-    public abstract void onStop();
-    public abstract void onDestroy();
+    public void onCreate() {}
+    public void onStart() {}
+    public void onResume() {}
+    public void onPause() {}
+    public void onStop() {}
+    public void onDestroy() {}
 
     public void setFragmentView(V fragmentView) {
         this.fragmentView = fragmentView;

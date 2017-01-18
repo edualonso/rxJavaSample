@@ -25,36 +25,6 @@ public class MoviesViewModel extends BaseViewModel implements SubscriberCallback
         this.activityWeakReference = new WeakReference<>(activity);
     }
 
-    @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
-
     @Bindable
     public String getText() {
         return text;

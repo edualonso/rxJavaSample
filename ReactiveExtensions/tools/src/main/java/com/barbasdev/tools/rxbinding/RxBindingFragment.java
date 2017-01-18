@@ -28,7 +28,7 @@ public class RxBindingFragment extends BaseFragment {
         return binding.getRoot();
     }
 
-    /**
+    /*
      * RxBinding doesn't work with RxJava2 at the moment, so this solution cannot be used...
      */
 

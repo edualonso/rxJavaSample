@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import android.view.View;
 
 import com.barbasdev.common.base.BaseViewModel;
 import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
@@ -36,36 +35,6 @@ public class RxBindingViewModel extends BaseViewModel<RxBindingFragment> impleme
         this.activityWeakReference = new WeakReference<>(activity);
     }
 
-    @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
-
     @Bindable
     public String getText() {
         return text;
@@ -76,8 +45,9 @@ public class RxBindingViewModel extends BaseViewModel<RxBindingFragment> impleme
         notifyPropertyChanged(BR.text);
     }
 
-    public View.OnClickListener getOnClickListener() {
-        return view -> {
+//    public View.OnClickListener getOnClickListener() {
+    public void getData() {
+//        return view -> {
             Observable<List<Movie>> movieResultsObservable = MoviesManager.getInstance().getResults();
             Observable<List<Post>> postResultsObservable = PostsManager.getInstance().getResults();
             BiFunction<List<Movie>, List<Post>, List<String>> combineLambda = (movieResults, postResults) -> getMoviesAndPosts(movieResults, postResults);
@@ -112,7 +82,7 @@ public class RxBindingViewModel extends BaseViewModel<RxBindingFragment> impleme
 //                    .map(value -> value * value)
 //                    .flatMap(value -> Observable.range(value, 2))
 //                    .subscribe(value -> Timber.e("Value: " + value));
-        };
+//        };
     }
 
     @Override

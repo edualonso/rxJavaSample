@@ -26,36 +26,6 @@ public class PostsViewModel extends BaseViewModel implements SubscriberCallback<
         this.activityWeakReference = new WeakReference<>(activity);
     }
 
-    @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
-
     @Bindable
     public String getText() {
         return text;
@@ -63,7 +33,7 @@ public class PostsViewModel extends BaseViewModel implements SubscriberCallback<
 
     public void setText(String text) {
         this.text = text;
-        notifyPropertyChanged(BR.text);
+        notifyPropertyChanged(com.barbasdev.posts.BR.text);
     }
 
     public View.OnClickListener getOnClickListener() {

@@ -59,20 +59,9 @@ public class BaseActivity extends AppCompatActivity {
      * @param fragment
      * @param <F>
      */
-    public <F extends BaseFragment> void showFragmentTop(F fragment) {
+    public <F extends BaseFragment> void showFragment(F fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerTop, fragment, fragment.getClass().getSimpleName())
-                .commit();
-    }
-
-    /**
-     *
-     * @param fragment
-     * @param <F>
-     */
-    public <F extends BaseFragment> void showFragmentBottom(F fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerBottom, fragment, fragment.getClass().getSimpleName())
+                .replace(R.id.fragmentContainer, fragment, fragment.getClass().getSimpleName())
                 .commit();
     }
 }
