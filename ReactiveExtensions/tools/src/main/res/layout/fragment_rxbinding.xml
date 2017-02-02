@@ -20,10 +20,10 @@
             android:id="@+id/rxBindingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.getData()}"
             android:text="@{viewModel.text}"
             tools:text="PRESS ME" />
-            <!--android:onClick="@{viewModel::getData}"-->
+        <!--android:onClick="@{() -> viewModel.getData()}"-->
+        <!--android:onClick="@{viewModel::getData}"-->
         <!--android:onClick="@{viewModel.onClickListener}"-->
 
     </LinearLayout>

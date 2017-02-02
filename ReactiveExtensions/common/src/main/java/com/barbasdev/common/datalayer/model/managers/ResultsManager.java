@@ -2,7 +2,7 @@ package com.barbasdev.common.datalayer.model.managers;
 
 import com.barbasdev.common.network.subscribers.ApiResultSubscriber;
 
-import io.reactivex.Observable;
+import rx.Observable;
 
 /**
  * Created by edu on 23/11/2016.

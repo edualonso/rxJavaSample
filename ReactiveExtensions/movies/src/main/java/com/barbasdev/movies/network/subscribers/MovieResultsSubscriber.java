@@ -6,7 +6,6 @@ import com.barbasdev.movies.datamodel.Movie;
 
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 /**
@@ -16,11 +15,6 @@ public class MovieResultsSubscriber extends ApiResultSubscriber<List<Movie>> {
 
     public MovieResultsSubscriber(SubscriberCallback subscriberCallback) {
         super(subscriberCallback);
-    }
-
-    @Override
-    public void onSubscribe(Disposable d) {
-        // do as needed
     }
 
     @Override

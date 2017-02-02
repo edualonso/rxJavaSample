@@ -7,9 +7,9 @@ import com.barbasdev.posts.network.subscribers.PostResultsSubscriber;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by edu on 23/11/2016.

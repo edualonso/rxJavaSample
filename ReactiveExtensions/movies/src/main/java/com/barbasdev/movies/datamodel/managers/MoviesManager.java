@@ -8,10 +8,10 @@ import com.barbasdev.movies.network.subscribers.MovieResultsSubscriber;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by edu on 23/11/2016.
@@ -47,13 +47,12 @@ public class MoviesManager implements ResultsManager<List<Movie>, MovieResultsSu
      */
     private Observable<List<Movie>> getMovieListObservable() {
         return MoviesApiClient.getInstance().getService().getTopRatedMoviesObservable(MoviesApiClient.API_KEY)
-                .flatMapIterable(new Function<MovieResults, List<Movie>>() {
+                .flatMapIterable(new Func1<MovieResults, List<Movie>>() {
                     @Override
-                    public List<Movie> apply(MovieResults movieResults) throws Exception {
+                    public List<Movie> call(MovieResults movieResults) {
                         return movieResults.getResults();
                     }
                 })
-                .toList()
-                .toObservable();
+                .toList();
     }
 }
