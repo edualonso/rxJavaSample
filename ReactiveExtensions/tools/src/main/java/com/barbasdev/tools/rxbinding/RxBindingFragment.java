@@ -52,6 +52,7 @@ public class RxBindingFragment extends BaseFragment<RxBindingViewModel> {
 
         RxView.clicks(binding.rxBindingButtonTwoObservables)
                 .subscribe(aVoid -> {
+                    viewModel.clearResults();
                     moviesObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(viewModel.getApiResultsSubscriber());
@@ -62,6 +63,7 @@ public class RxBindingFragment extends BaseFragment<RxBindingViewModel> {
 
         RxView.clicks(binding.rxBindingButtonMerge)
                 .subscribe(aVoid -> {
+                    viewModel.clearResults();
                     Observable.merge(moviesObservable, postsObservable)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -70,6 +72,7 @@ public class RxBindingFragment extends BaseFragment<RxBindingViewModel> {
 
         RxView.clicks(binding.rxBindingButtonZip)
                 .subscribe(aVoid -> {
+                    viewModel.clearResults();
                     Func2<List<? extends ApiResult>, List<? extends ApiResult>, List<? extends ApiResult>> combineLambda = (movieResults, postResults) -> viewModel.getApiResults(movieResults, postResults);
                     Observable.zip(moviesObservable, postsObservable, combineLambda)
                             .subscribeOn(Schedulers.io())

@@ -67,6 +67,10 @@ public class RxBindingViewModel<T extends ApiResult> extends BaseViewModel imple
         return results;
     }
 
+    public void clearResults() {
+        adapter.clearApiResults();
+    }
+
     public RxFragmentSubscriber getApiResultsSubscriber() {
         return new RxFragmentSubscriber(this);
     }

@@ -41,6 +41,11 @@ public class RxFragmentResultsAdapter<T extends ApiResult> extends RecyclerView.
         notifyDataSetChanged();
     }
 
+    public void clearApiResults() {
+        apiResults.clear();
+        notifyDataSetChanged();
+    }
+
     public static class ResultViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView;
