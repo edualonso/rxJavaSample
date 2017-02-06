@@ -20,6 +20,6 @@ public class MovieResultsSubscriber extends ApiResultSubscriber<List<Movie>> {
     @Override
     public void onNext(List<Movie> results) {
         Timber.d("----------> onNext");
-        subscriberCallback.processResult(results);
+        subscriberCallback.processResults(results);
     }
 }

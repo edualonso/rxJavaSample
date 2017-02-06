@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.barbasdev.common.base.BaseFragment;
+import com.barbasdev.posts.databinding.FragmentPostsBinding;
 
 /**
  * Created by edu on 20/11/2016.
  */
 
 public class PostsFragment extends BaseFragment {
+
+    private FragmentPostsBinding binding;
 
     @Nullable
     @Override

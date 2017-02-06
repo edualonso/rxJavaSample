@@ -78,4 +78,8 @@ public class MovieResults extends RealmObject implements ApiResult {
         this.totalPages = totalPages;
     }
 
+    @Override
+    public String getTitle() {
+        return null;
+    }
 }

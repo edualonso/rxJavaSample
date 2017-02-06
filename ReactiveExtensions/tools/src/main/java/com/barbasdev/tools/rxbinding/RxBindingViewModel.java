@@ -1,17 +1,22 @@
 package com.barbasdev.tools.rxbinding;
 
 import android.app.Activity;
-import android.databinding.Bindable;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.barbasdev.common.base.BaseViewModel;
+import com.barbasdev.common.datalayer.model.ApiResult;
+import com.barbasdev.common.network.subscribers.ApiResultSubscriber;
 import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
 import com.barbasdev.movies.datamodel.Movie;
 import com.barbasdev.movies.datamodel.managers.MoviesManager;
 import com.barbasdev.posts.datamodel.Post;
 import com.barbasdev.posts.datamodel.managers.PostsManager;
-import com.barbasdev.tools.BR;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -27,35 +32,31 @@ import timber.log.Timber;
  * Created by edu on 09/01/2017.
  */
 
-public class RxBindingViewModel extends BaseViewModel implements SubscriberCallback<List<String>> {
+public class RxBindingViewModel<T extends ApiResult> extends BaseViewModel implements SubscriberCallback<List<T>> {
 
-    private String text;
+    private List<T> apiResults = new ArrayList<>();
+    private RxFragmentResultsAdapter adapter;
 
     public RxBindingViewModel(Activity activity) {
-        this.activityWeakReference = new WeakReference<>(activity);
-    }
-
-    @Bindable
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-        notifyPropertyChanged(BR.text);
+        activityWeakReference = new WeakReference<>(activity);
+        adapter = new RxFragmentResultsAdapter();
     }
 
     @Override
-    public void processResult(List<String> result) {
-        for (String title : result) {
-            Timber.e("Title: " + title);
-        }
+    public void processResults(List<T> results) {
+        apiResults.addAll(results);
+        adapter.notifyDataSetChanged();
     }
 
     public Observable<List<String>> getResultsObservable() {
         Observable<List<Movie>> movieResultsObservable = MoviesManager.getInstance().getResults();
         Observable<List<Post>> postResultsObservable = PostsManager.getInstance().getResults();
-        Func2<List<Movie>, List<Post>, List<String>> combineLambda = (movieResults, postResults) -> getMoviesAndPosts(movieResults, postResults);
+        Func2<List<Movie>, List<Post>, List<String>> combineLambda = new Func2<List<Movie>, List<Post>, List<String>>() {
+            @Override
+            public List<String> call(List<Movie> movieResults, List<Post> postResults) {
+                return getMoviesAndPosts(movieResults, postResults);
+            }
+        };
 
         return Observable.zip(movieResultsObservable, postResultsObservable, combineLambda)
                 .subscribeOn(Schedulers.io())
@@ -63,7 +64,7 @@ public class RxBindingViewModel extends BaseViewModel implements SubscriberCallb
     }
 
     @NonNull
-    private List<String> getMoviesAndPosts(List<Movie> movieResults, List<Post> postResults) {
+    public List<String> getMoviesAndPosts(List<Movie> movieResults, List<Post> postResults) {
         List<String> moviesAndPosts = new ArrayList<>();
         for (Movie movie : movieResults) {
             moviesAndPosts.add(movie.getTitle());
@@ -73,6 +74,14 @@ public class RxBindingViewModel extends BaseViewModel implements SubscriberCallb
             moviesAndPosts.add(post.getTitle());
         }
         return moviesAndPosts;
+    }
+
+    @NonNull
+    public List<T> getApiResults(List<T> movieResults, List<T> postResults) {
+        List<T> results = new ArrayList<>();
+        results.addAll(movieResults);
+        results.addAll(postResults);
+        return results;
     }
 
     @Override
@@ -101,4 +110,61 @@ public class RxBindingViewModel extends BaseViewModel implements SubscriberCallb
             return new RxBindingViewModel[size];
         }
     };
+
+    public RxFragmentSubscriber getApiResultsSubscriber() {
+        return new RxFragmentSubscriber(this);
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return adapter;
+    }
+
+
+
+
+
+
+
+
+    public static class ResultViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView textView;
+
+        public ResultViewHolder(View itemView) {
+            super(itemView);
+            textView = (TextView) itemView;
+        }
+    }
+
+    public class RxFragmentResultsAdapter extends RecyclerView.Adapter<ResultViewHolder> {
+        @Override
+        public ResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            TextView textView = new TextView(parent.getContext());
+            textView.setTextColor(Color.BLACK);
+            return new ResultViewHolder(textView);
+        }
+
+        @Override
+        public void onBindViewHolder(ResultViewHolder holder, int position) {
+            holder.textView.setText(apiResults.get(position).getTitle());
+        }
+
+        @Override
+        public int getItemCount() {
+            return apiResults.size();
+        }
+    }
+
+    public class RxFragmentSubscriber extends ApiResultSubscriber<List<T>> {
+
+        public RxFragmentSubscriber(SubscriberCallback subscriberCallback) {
+            super(subscriberCallback);
+        }
+
+        @Override
+        public void onNext(List<T> result) {
+            Timber.d("timestamp: " + System.currentTimeMillis());
+            subscriberCallback.processResults(result);
+        }
+    }
 }

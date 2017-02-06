@@ -22,7 +22,7 @@ public class PostResultsSubscriber extends ApiResultSubscriber<List<Post>> {
     @Override
     public void onNext(List<Post> postList) {
         Log.d(TAG, "----------> onNext");
-        subscriberCallback.processResult(postList);
+        subscriberCallback.processResults(postList);
     }
 
 }

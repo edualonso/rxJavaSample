@@ -5,4 +5,6 @@ package com.barbasdev.common.datalayer.model;
  */
 
 public interface ApiResult {
+
+    String getTitle();
 }

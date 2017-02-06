@@ -17,14 +17,30 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/rxBindingButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/rxBindingButtonTwoObservables"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.text}"
-            tools:text="PRESS ME" />
-        <!--android:onClick="@{() -> viewModel.getData()}"-->
-        <!--android:onClick="@{viewModel::getData}"-->
-        <!--android:onClick="@{viewModel.onClickListener}"-->
+            android:layout_margin="8dp"
+            android:text="LOAD DATA (TWO OBSERVABLES)" />
+
+        <Button
+            android:id="@+id/rxBindingButtonMerge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="LOAD DATA (MERGE)" />
+
+        <Button
+            android:id="@+id/rxBindingButtonZip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="LOAD DATA (ZIP)" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

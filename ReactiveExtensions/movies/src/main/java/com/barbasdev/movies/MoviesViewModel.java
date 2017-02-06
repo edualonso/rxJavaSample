@@ -45,7 +45,7 @@ public class MoviesViewModel extends BaseViewModel implements SubscriberCallback
     }
 
     @Override
-    public void processResult(MovieResults movieResults) {
+    public void processResults(MovieResults movieResults) {
         setText("NUMBER OF MOVIES: " + movieResults.getResults().size());
     }
 

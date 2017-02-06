@@ -41,6 +41,7 @@ public class Post extends RealmObject implements ApiResult {
         this.id = id;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }

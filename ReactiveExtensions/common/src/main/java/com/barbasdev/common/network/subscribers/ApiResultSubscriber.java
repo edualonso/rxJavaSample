@@ -19,13 +19,13 @@ public abstract class ApiResultSubscriber<T> implements Observer<T> {
     @Override
     public void onCompleted() {
         // override in children classes
-        Timber.e("----------> onCompleted");
+        Timber.d("----------> onCompleted");
     }
 
     @Override
     public void onError(Throwable e) {
         // override in children classes
-        Timber.e("----------> onError");
+        Timber.e("----------> onError: " + e.getMessage());
     }
 
     @Override

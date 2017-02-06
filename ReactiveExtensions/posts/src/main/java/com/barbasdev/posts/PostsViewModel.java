@@ -46,7 +46,7 @@ public class PostsViewModel extends BaseViewModel implements SubscriberCallback<
     }
 
     @Override
-    public void processResult(List<Post> postList) {
+    public void processResults(List<Post> postList) {
         setText("NUMBER OF POSTS: " + postList.size());
     }
 

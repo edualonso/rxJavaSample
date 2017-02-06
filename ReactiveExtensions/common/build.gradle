@@ -40,6 +40,7 @@ dependencies {
 
     // android
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
+    compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
 
     // google
     compile "com.google.code.gson:gson:$GSON_VERSION"
@@ -51,11 +52,11 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$RXJAVA_VERSION"
     compile "io.reactivex.rxjava2:rxandroid:$RXJAVA_VERSION"
     compile "com.jakewharton.rxbinding:rxbinding:$RXBINDING_VERSION"
-    compile "com.jakewharton.rxbinding:rxbinding-support-v4:$RXBINDING_VERSION"
-    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$RXBINDING_VERSION"
-    compile "com.jakewharton.rxbinding:rxbinding-design:$RXBINDING_VERSION"
-    compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$RXBINDING_VERSION"
-    compile "com.jakewharton.rxbinding:rxbinding-leanback-v17:$RXBINDING_VERSION"
+//    compile "com.jakewharton.rxbinding:rxbinding-support-v4:$RXBINDING_VERSION"
+//    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$RXBINDING_VERSION"
+//    compile "com.jakewharton.rxbinding:rxbinding-design:$RXBINDING_VERSION"
+//    compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$RXBINDING_VERSION"
+//    compile "com.jakewharton.rxbinding:rxbinding-leanback-v17:$RXBINDING_VERSION"
 
     // retrofit
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"

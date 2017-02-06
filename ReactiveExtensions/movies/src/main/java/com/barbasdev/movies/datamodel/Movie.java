@@ -121,6 +121,7 @@ public class Movie extends RealmObject implements ApiResult {
         this.originalLanguage = originalLanguage;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }

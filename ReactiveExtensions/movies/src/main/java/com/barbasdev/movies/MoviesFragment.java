@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.barbasdev.common.base.BaseFragment;
+import com.barbasdev.movies.databinding.FragmentMoviesBinding;
 
 /**
  * Created by edu on 20/11/2016.
  */
 
 public class MoviesFragment extends BaseFragment {
+
+    private FragmentMoviesBinding binding;
 
     @Nullable
     @Override

@@ -16,6 +16,6 @@ public class RxBindingSubscriber extends ApiResultSubscriber<List<String>> {
 
     @Override
     public void onNext(List<String> results) {
-        subscriberCallback.processResult(results);
+        subscriberCallback.processResults(results);
     }
 }
