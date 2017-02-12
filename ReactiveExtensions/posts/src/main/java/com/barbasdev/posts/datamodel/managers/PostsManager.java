@@ -25,7 +25,6 @@ public class PostsManager implements ResultsManager<List<Post>, PostResultsSubsc
         return instance;
     }
 
-    @Override
     public void getResults(PostResultsSubscriber postsSubscriber) {
         Observable<List<Post>> call = PostsApiClient.getInstance().getService().getUserPostsObservable(1);
         call.subscribeOn(Schedulers.io())
@@ -33,7 +32,6 @@ public class PostsManager implements ResultsManager<List<Post>, PostResultsSubsc
                 .subscribe(postsSubscriber);
     }
 
-    @Override
     public Observable<List<Post>> getResults() {
         return PostsApiClient.getInstance().getService().getUserPostsObservable(1);
     }

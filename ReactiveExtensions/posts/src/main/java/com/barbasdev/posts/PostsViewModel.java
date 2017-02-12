@@ -1,6 +1,5 @@
 package com.barbasdev.posts;
 
-import android.app.Activity;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.view.View;
@@ -11,7 +10,6 @@ import com.barbasdev.posts.datamodel.Post;
 import com.barbasdev.posts.datamodel.managers.PostsManager;
 import com.barbasdev.posts.network.subscribers.PostResultsSubscriber;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -22,8 +20,8 @@ public class PostsViewModel extends BaseViewModel implements SubscriberCallback<
 
     private String text;
 
-    public PostsViewModel(Activity activity) {
-        this.activityWeakReference = new WeakReference<>(activity);
+    public PostsViewModel() {
+
     }
 
     @Bindable

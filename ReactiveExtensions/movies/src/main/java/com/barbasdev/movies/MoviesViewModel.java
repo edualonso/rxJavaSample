@@ -1,17 +1,12 @@
 package com.barbasdev.movies;
 
-import android.app.Activity;
-import android.databinding.Bindable;
 import android.os.Parcel;
-import android.view.View;
 
 import com.barbasdev.common.base.BaseViewModel;
+import com.barbasdev.common.datalayer.model.ApiResultAdapter;
 import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
+import com.barbasdev.movies.datamodel.Movie;
 import com.barbasdev.movies.datamodel.MovieResults;
-import com.barbasdev.movies.datamodel.managers.MoviesManager;
-import com.barbasdev.movies.network.subscribers.MovieResultsSubscriber;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Created by edu on 20/11/2016.
@@ -19,34 +14,22 @@ import java.lang.ref.WeakReference;
 
 public class MoviesViewModel extends BaseViewModel implements SubscriberCallback<MovieResults> {
 
-    private String text;
+    private ApiResultAdapter adapter;
 
-    public MoviesViewModel(Activity activity) {
-        this.activityWeakReference = new WeakReference<>(activity);
+    public MoviesViewModel() {
+        adapter = new ApiResultAdapter();
     }
 
-    @Bindable
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-        notifyPropertyChanged(com.barbasdev.movies.BR.text);
-    }
-
-    public View.OnClickListener getOnClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MoviesManager.getInstance().getResults(new MovieResultsSubscriber(MoviesViewModel.this));
-            }
-        };
+    public ApiResultAdapter<Movie> getAdapter() {
+        if (adapter.getApiResults() == null) {
+            adapter.initApiResults();
+        }
+        return adapter;
     }
 
     @Override
     public void processResults(MovieResults movieResults) {
-        setText("NUMBER OF MOVIES: " + movieResults.getResults().size());
+//        setText("NUMBER OF MOVIES: " + movieResults.getResults().size());
     }
 
     @Override
@@ -56,11 +39,11 @@ public class MoviesViewModel extends BaseViewModel implements SubscriberCallback
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.text);
+        dest.writeParcelable(this.adapter, flags);
     }
 
     protected MoviesViewModel(Parcel in) {
-        this.text = in.readString();
+        this.adapter = in.readParcelable(ApiResultAdapter.class.getClassLoader());
     }
 
     public static final Creator<MoviesViewModel> CREATOR = new Creator<MoviesViewModel>() {

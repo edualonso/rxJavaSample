@@ -14,6 +14,7 @@ import com.barbasdev.movies.datamodel.Movie;
 import com.barbasdev.movies.datamodel.managers.MoviesManager;
 import com.barbasdev.posts.datamodel.Post;
 import com.barbasdev.posts.datamodel.managers.PostsManager;
+import com.barbasdev.tools.BR;
 import com.barbasdev.tools.databinding.FragmentRxbindingBinding;
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -36,7 +37,7 @@ public class RxBindingFragment extends BaseFragment<RxBindingViewModel> {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentRxbindingBinding.inflate(inflater, container, false);
-        binding.setVariable(com.barbasdev.tools.BR.viewModel, viewModel);
+        binding.setVariable(BR.viewModel, viewModel);
 
         setupRecyclerView(binding.recyclerView);
 
@@ -47,7 +48,7 @@ public class RxBindingFragment extends BaseFragment<RxBindingViewModel> {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Observable<List<Movie>> moviesObservable = MoviesManager.getInstance().getResults();
+        Observable<List<Movie>> moviesObservable = MoviesManager.getInstance().getTopRatedMovies();
         Observable<List<Post>> postsObservable = PostsManager.getInstance().getResults();
 
         RxView.clicks(binding.rxBindingButtonTwoObservables)

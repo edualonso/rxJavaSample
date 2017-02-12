@@ -9,9 +9,7 @@ import com.barbasdev.movies.network.subscribers.MovieResultsSubscriber;
 import java.util.List;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by edu on 23/11/2016.
@@ -27,16 +25,20 @@ public class MoviesManager implements ResultsManager<List<Movie>, MovieResultsSu
         return instance;
     }
 
-    @Override
     public void getResults(MovieResultsSubscriber movieResultsSubscriber) {
-        getMovieListObservable().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+//        getMovieListObservable().subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe();
     }
 
-    @Override
-    public Observable<List<Movie>> getResults() {
-        return getMovieListObservable();
+    public Observable<List<Movie>> getTopRatedMovies() {
+        Observable<MovieResults> topRatedMoviesObservable = MoviesApiClient.getInstance().getService().getTopRatedMoviesObservable(MoviesApiClient.API_KEY);
+        return getMovieListObservable(topRatedMoviesObservable);
+    }
+
+    public Observable<List<Movie>> getMovieDetailsObservable(String query) {
+        Observable<MovieResults> movieDetailsObservable = MoviesApiClient.getInstance().getService().getMovieDetailsObservable(MoviesApiClient.API_KEY, query);
+        return getMovieListObservable(movieDetailsObservable);
     }
 
     /**
@@ -45,14 +47,13 @@ public class MoviesManager implements ResultsManager<List<Movie>, MovieResultsSu
      *
      * @return right type of observable
      */
-    private Observable<List<Movie>> getMovieListObservable() {
-        return MoviesApiClient.getInstance().getService().getTopRatedMoviesObservable(MoviesApiClient.API_KEY)
-                .flatMapIterable(new Func1<MovieResults, List<Movie>>() {
-                    @Override
-                    public List<Movie> call(MovieResults movieResults) {
-                        return movieResults.getResults();
-                    }
-                })
-                .toList();
+    private Observable<List<Movie>> getMovieListObservable(Observable<MovieResults> moviesObservable) {
+        return moviesObservable.flatMapIterable(new Func1<MovieResults, List<Movie>>() {
+            @Override
+            public List<Movie> call(MovieResults movieResults) {
+                return movieResults.getResults();
+            }
+        }).toList();
     }
+
 }

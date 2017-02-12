@@ -1,8 +1,8 @@
 package com.barbasdev.common.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,19 @@ import com.barbasdev.common.R;
 
 public class BaseActivity extends AppCompatActivity {
 
-    protected final static String ARG_VIEWMODEL = "ARG_VIEWMODEL";
+    public final static String ARG_VIEWMODEL = "ARG_VIEWMODEL";
+
+    /**
+     *
+     * @param context
+     * @param fragmentClass
+     * @param <F>
+     * @param <V>
+     * @return
+     */
+    public static <F extends BaseFragment, V extends BaseViewModel> F instantiateFragment(Context context, Class<F> fragmentClass) {
+        return instantiateFragment(context, fragmentClass, null, null);
+    }
 
     /**
      *
@@ -36,13 +48,17 @@ public class BaseActivity extends AppCompatActivity {
      * @param <V>
      * @return
      */
-    public static <F extends Fragment, V extends BaseViewModel> F instantiateFragment(Context context, Class<F> fragmentClass, @NonNull V viewModel, @Nullable Bundle args) {
+    public static <F extends Fragment, V extends BaseViewModel> F instantiateFragment(Context context, Class<F> fragmentClass, @Nullable V viewModel, @Nullable Bundle args) {
         F fragment = (F) Fragment.instantiate(context, fragmentClass.getName());
 
         if (args == null) {
             args = new Bundle();
         }
-        args.putParcelable(ARG_VIEWMODEL, viewModel);
+
+        if (viewModel != null) {
+            args.putParcelable(ARG_VIEWMODEL, viewModel);
+        }
+
         fragment.setArguments(args);
 
         return fragment;
@@ -63,5 +79,13 @@ public class BaseActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, fragment, fragment.getClass().getSimpleName())
                 .commit();
+    }
+
+    public <V extends BaseViewModel> V getFragmentViewModel() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            return intent.getParcelableExtra(ARG_VIEWMODEL);
+        }
+        return null;
     }
 }

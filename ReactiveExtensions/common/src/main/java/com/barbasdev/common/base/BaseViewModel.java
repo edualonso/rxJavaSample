@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference;
 
 public abstract class BaseViewModel extends BaseObservable implements Parcelable {
 
-    protected WeakReference<Activity> activityWeakReference = new WeakReference<>(null);
+    private WeakReference<Activity> activityWeakReference = new WeakReference<>(null);
 
     public void onCreate() {}
     public void onStart() {}
@@ -21,4 +21,11 @@ public abstract class BaseViewModel extends BaseObservable implements Parcelable
     public void onStop() {}
     public void onDestroy() {}
 
+    public WeakReference<Activity> getActivityWeakReference() {
+        return activityWeakReference;
+    }
+
+    public void setActivityWeakReference(WeakReference<Activity> activityWeakReference) {
+        this.activityWeakReference = activityWeakReference;
+    }
 }

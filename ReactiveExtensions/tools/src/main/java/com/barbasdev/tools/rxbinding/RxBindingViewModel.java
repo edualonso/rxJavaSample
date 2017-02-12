@@ -1,15 +1,13 @@
 package com.barbasdev.tools.rxbinding;
 
-import android.app.Activity;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 
 import com.barbasdev.common.base.BaseViewModel;
 import com.barbasdev.common.datalayer.model.ApiResult;
+import com.barbasdev.common.datalayer.model.ApiResultAdapter;
 import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,16 +17,15 @@ import java.util.List;
 
 public class RxBindingViewModel<T extends ApiResult> extends BaseViewModel implements SubscriberCallback<List<T>> {
 
-    private RxFragmentResultsAdapter adapter;
+    private ApiResultAdapter adapter;
 
-    public RxBindingViewModel(Activity activity) {
-        activityWeakReference = new WeakReference<>(activity);
-        adapter = new RxFragmentResultsAdapter();
+    public RxBindingViewModel() {
+        adapter = new ApiResultAdapter();
     }
 
     @Override
     public void processResults(List<T> results) {
-        adapter.addApiResults(results);
+        adapter.addApiResults(results, false);
     }
 
 //    public Observable<List<String>> getResultsObservable() {
@@ -75,7 +72,7 @@ public class RxBindingViewModel<T extends ApiResult> extends BaseViewModel imple
         return new RxFragmentSubscriber(this);
     }
 
-    public RecyclerView.Adapter getAdapter() {
+    public ApiResultAdapter<T> getAdapter() {
         return adapter;
     }
 
@@ -86,9 +83,6 @@ public class RxBindingViewModel<T extends ApiResult> extends BaseViewModel imple
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-    }
-
-    public RxBindingViewModel() {
     }
 
     protected RxBindingViewModel(Parcel in) {
