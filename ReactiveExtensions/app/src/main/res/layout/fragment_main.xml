@@ -16,12 +16,6 @@
             android:text="MOVIES BUTTON" />
 
         <Button
-            android:id="@+id/postsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="POSTS BUTTON" />
-
-        <Button
             android:id="@+id/testsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

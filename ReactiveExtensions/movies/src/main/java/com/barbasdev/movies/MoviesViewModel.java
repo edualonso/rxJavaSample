@@ -4,15 +4,27 @@ import android.os.Parcel;
 
 import com.barbasdev.common.base.BaseViewModel;
 import com.barbasdev.common.datalayer.model.ApiResultAdapter;
-import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
 import com.barbasdev.movies.datamodel.Movie;
-import com.barbasdev.movies.datamodel.MovieResults;
+import com.barbasdev.movies.datamodel.managers.MoviesManager;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by edu on 20/11/2016.
  */
 
-public class MoviesViewModel extends BaseViewModel implements SubscriberCallback<MovieResults> {
+public class MoviesViewModel extends BaseViewModel {
 
     private ApiResultAdapter adapter;
 
@@ -28,8 +40,65 @@ public class MoviesViewModel extends BaseViewModel implements SubscriberCallback
     }
 
     @Override
-    public void processResults(MovieResults movieResults) {
-//        setText("NUMBER OF MOVIES: " + movieResults.getResults().size());
+    public void setup() {
+        adapter = new ApiResultAdapter();
+    }
+
+    public void queryMovie(Observable<CharSequence> charSequenceObservable) {
+        Predicate<CharSequence> charSequencePredicate = charSequence -> {
+            Timber.e("Thread: " + Thread.currentThread().getName() + ", FILTERING RESULTS (movies), length: " + charSequence.length());
+            if (charSequence.length() < 3) {
+                adapter.clearApiResults();
+                return false;
+            }
+            return true;
+        };
+
+        Function<CharSequence, ObservableSource<List<Movie>>> switchMapper = new Function<CharSequence, ObservableSource<List<Movie>>>() {
+            @Override
+            public ObservableSource<List<Movie>> apply(CharSequence charSequence) throws Exception {
+                Timber.e("Thread: " + Thread.currentThread().getName() + ", PREPARING QUERY (movies): " + charSequence);
+                return MoviesManager.getInstance().getMovieDetailsObservable(charSequence.toString());
+            }
+        };
+
+        Observer<List<Movie>> observer = new Observer<List<Movie>>() {
+            @Override
+            public void onComplete() {
+                Timber.e("-----------------------> onCompleted (movies)");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Timber.e("-----------------------> onError (movies): " + e.getMessage());
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(List<Movie> movies) {
+                for (Movie movie : movies) {
+                    Timber.e("Thread: " + Thread.currentThread().getName() + ", Movie: " + movie.getTitle());
+                }
+
+                adapter.addApiResults(movies, true);
+            }
+        };
+
+        charSequenceObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(charSequencePredicate)
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .switchMapDelayError(switchMapper)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 
     @Override
@@ -39,11 +108,11 @@ public class MoviesViewModel extends BaseViewModel implements SubscriberCallback
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.adapter, flags);
+
     }
 
     protected MoviesViewModel(Parcel in) {
-        this.adapter = in.readParcelable(ApiResultAdapter.class.getClassLoader());
+
     }
 
     public static final Creator<MoviesViewModel> CREATOR = new Creator<MoviesViewModel>() {

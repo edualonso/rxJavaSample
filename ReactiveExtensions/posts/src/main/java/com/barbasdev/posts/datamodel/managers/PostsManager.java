@@ -7,14 +7,14 @@ import com.barbasdev.posts.network.subscribers.PostResultsSubscriber;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by edu on 23/11/2016.
  */
-public class PostsManager implements ResultsManager<List<Post>, PostResultsSubscriber> {
+public class PostsManager implements ResultsManager<List<Post>> {
 
     private static PostsManager instance;
 

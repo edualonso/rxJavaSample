@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.barbasdev.tools.rxbinding.RxBindingViewModel" />
+            type="com.barbasdev.tools.rxbinding.ProofOfConceptViewModel" />
 
     </data>
 

@@ -18,10 +18,9 @@ public class BaseActivity extends AppCompatActivity {
      * @param context
      * @param fragmentClass
      * @param <F>
-     * @param <V>
      * @return
      */
-    public static <F extends BaseFragment, V extends BaseViewModel> F instantiateFragment(Context context, Class<F> fragmentClass) {
+    public static <F extends BaseFragment> F instantiateFragment(Context context, Class<F> fragmentClass) {
         return instantiateFragment(context, fragmentClass, null, null);
     }
 

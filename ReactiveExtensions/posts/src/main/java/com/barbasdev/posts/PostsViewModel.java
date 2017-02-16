@@ -5,23 +5,22 @@ import android.os.Parcel;
 import android.view.View;
 
 import com.barbasdev.common.base.BaseViewModel;
-import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
-import com.barbasdev.posts.datamodel.Post;
-import com.barbasdev.posts.datamodel.managers.PostsManager;
-import com.barbasdev.posts.network.subscribers.PostResultsSubscriber;
-
-import java.util.List;
 
 /**
  * Created by edu on 20/11/2016.
  */
 
-public class PostsViewModel extends BaseViewModel implements SubscriberCallback<List<Post>> {
+public class PostsViewModel extends BaseViewModel {
 
     private String text;
 
     public PostsViewModel() {
 
+    }
+
+    @Override
+    public void setup() {
+        // do nothing, not needed
     }
 
     @Bindable
@@ -38,14 +37,9 @@ public class PostsViewModel extends BaseViewModel implements SubscriberCallback<
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PostsManager.getInstance().getResults(new PostResultsSubscriber(PostsViewModel.this));
+//                PostsManager.getInstance().getResults(new PostResultsSubscriber(PostsViewModel.this));
             }
         };
-    }
-
-    @Override
-    public void processResults(List<Post> postList) {
-        setText("NUMBER OF POSTS: " + postList.size());
     }
 
     @Override
@@ -73,5 +67,4 @@ public class PostsViewModel extends BaseViewModel implements SubscriberCallback<
             return new PostsViewModel[size];
         }
     };
-
 }

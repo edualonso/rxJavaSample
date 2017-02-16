@@ -8,9 +8,9 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class RxFragmentSubscriber<T extends ApiResult> extends ApiResultSubscriber<List<T>> {
+public class ProofOfConceptSubscriber<T extends ApiResult> extends ApiResultSubscriber<List<T>> {
 
-    public RxFragmentSubscriber(SubscriberCallback subscriberCallback) {
+    public ProofOfConceptSubscriber(SubscriberCallback subscriberCallback) {
         super(subscriberCallback);
     }
 

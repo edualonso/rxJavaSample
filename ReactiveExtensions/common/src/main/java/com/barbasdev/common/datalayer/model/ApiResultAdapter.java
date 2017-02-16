@@ -1,7 +1,5 @@
 package com.barbasdev.common.datalayer.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +8,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApiResultAdapter<T extends ApiResult> extends RecyclerView.Adapter<ApiResultAdapter.ApiResultViewHolder> implements Parcelable{
+public class ApiResultAdapter<T extends ApiResult> extends RecyclerView.Adapter<ApiResultAdapter.ApiResultViewHolder> {
 
-    private List<T> apiResults;
+    private List<T> apiResults = new ArrayList<>();
 
     public ApiResultAdapter() {
 
@@ -65,30 +63,4 @@ public class ApiResultAdapter<T extends ApiResult> extends RecyclerView.Adapter<
             textView = (TextView) itemView;
         }
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
-    protected ApiResultAdapter(Parcel in) {
-
-    }
-
-    public static final Creator<ApiResultAdapter> CREATOR = new Creator<ApiResultAdapter>() {
-        @Override
-        public ApiResultAdapter createFromParcel(Parcel source) {
-            return new ApiResultAdapter(source);
-        }
-
-        @Override
-        public ApiResultAdapter[] newArray(int size) {
-            return new ApiResultAdapter[size];
-        }
-    };
 }

@@ -4,17 +4,17 @@ import com.barbasdev.common.datalayer.model.managers.ResultsManager;
 import com.barbasdev.movies.datamodel.Movie;
 import com.barbasdev.movies.datamodel.MovieResults;
 import com.barbasdev.movies.network.MoviesApiClient;
-import com.barbasdev.movies.network.subscribers.MovieResultsSubscriber;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+import timber.log.Timber;
 
 /**
  * Created by edu on 23/11/2016.
  */
-public class MoviesManager implements ResultsManager<List<Movie>, MovieResultsSubscriber> {
+public class MoviesManager implements ResultsManager<List<Movie>> {
 
     private static MoviesManager instance;
 
@@ -25,17 +25,20 @@ public class MoviesManager implements ResultsManager<List<Movie>, MovieResultsSu
         return instance;
     }
 
-    public void getResults(MovieResultsSubscriber movieResultsSubscriber) {
-//        getMovieListObservable().subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe();
-    }
-
+    /**
+     *
+     * @return
+     */
     public Observable<List<Movie>> getTopRatedMovies() {
         Observable<MovieResults> topRatedMoviesObservable = MoviesApiClient.getInstance().getService().getTopRatedMoviesObservable(MoviesApiClient.API_KEY);
         return getMovieListObservable(topRatedMoviesObservable);
     }
 
+    /**
+     *
+     * @param query
+     * @return
+     */
     public Observable<List<Movie>> getMovieDetailsObservable(String query) {
         Observable<MovieResults> movieDetailsObservable = MoviesApiClient.getInstance().getService().getMovieDetailsObservable(MoviesApiClient.API_KEY, query);
         return getMovieListObservable(movieDetailsObservable);
@@ -48,12 +51,12 @@ public class MoviesManager implements ResultsManager<List<Movie>, MovieResultsSu
      * @return right type of observable
      */
     private Observable<List<Movie>> getMovieListObservable(Observable<MovieResults> moviesObservable) {
-        return moviesObservable.flatMapIterable(new Func1<MovieResults, List<Movie>>() {
+        return moviesObservable.flatMapIterable(new Function<MovieResults, List<Movie>>() {
             @Override
-            public List<Movie> call(MovieResults movieResults) {
+            public List<Movie> apply(MovieResults movieResults) throws Exception {
+                Timber.e("-----------------------> apply (movies)");
                 return movieResults.getResults();
             }
-        }).toList();
+        }).toList().toObservable();
     }
-
 }

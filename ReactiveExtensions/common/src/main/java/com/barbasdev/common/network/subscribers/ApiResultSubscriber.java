@@ -2,7 +2,8 @@ package com.barbasdev.common.network.subscribers;
 
 import com.barbasdev.common.network.subscribers.callbacks.SubscriberCallback;
 
-import rx.Observer;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 /**
@@ -17,9 +18,14 @@ public abstract class ApiResultSubscriber<T> implements Observer<T> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onComplete() {
         // override in children classes
-        Timber.d("----------> onCompleted");
+        Timber.d("----------> onComplete");
     }
 
     @Override

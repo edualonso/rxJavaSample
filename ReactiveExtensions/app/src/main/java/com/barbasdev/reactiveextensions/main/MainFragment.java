@@ -10,21 +10,20 @@ import android.view.ViewGroup;
 
 import com.barbasdev.common.base.BaseActivity;
 import com.barbasdev.common.base.BaseFragment;
+import com.barbasdev.common.base.BaseViewModel;
 import com.barbasdev.movies.MoviesActivity;
 import com.barbasdev.movies.MoviesViewModel;
 import com.barbasdev.reactiveextensions.R;
 import com.barbasdev.reactiveextensions.databinding.FragmentMainBinding;
-import com.jakewharton.rxbinding.view.RxView;
-
-import rx.functions.Action1;
+import com.barbasdev.tools.rxbinding.ProofOfConceptActivity;
+import com.barbasdev.tools.rxbinding.ProofOfConceptViewModel;
+import com.jakewharton.rxbinding2.view.RxView;
 
 /**
  * Created by edu on 11/02/2017.
  */
 
-public class MainFragment extends BaseFragment {
-
-    private FragmentMainBinding binding;
+public class MainFragment extends BaseFragment<BaseViewModel, FragmentMainBinding> {
 
     @Nullable
     @Override
@@ -38,13 +37,22 @@ public class MainFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         RxView.clicks(binding.moviesButton)
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        Intent intent = new Intent(getContext(), MoviesActivity.class);
-                        intent.putExtra(BaseActivity.ARG_VIEWMODEL, new MoviesViewModel());
-                        startActivity(intent);
-                    }
+                .subscribe(nothing -> {
+                    Intent intent = new Intent(getContext(), MoviesActivity.class);
+                    intent.putExtra(BaseActivity.ARG_VIEWMODEL, new MoviesViewModel());
+                    startActivity(intent);
                 });
+
+        RxView.clicks(binding.testsButton)
+                .subscribe(nothing -> {
+                    Intent intent = new Intent(getContext(), ProofOfConceptActivity.class);
+                    intent.putExtra(BaseActivity.ARG_VIEWMODEL, new ProofOfConceptViewModel<>());
+                    startActivity(intent);
+                });
+    }
+
+    @Override
+    protected void setupViewModel() {
+        // not needed, do nothing
     }
 }

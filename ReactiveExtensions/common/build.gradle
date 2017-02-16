@@ -51,7 +51,7 @@ dependencies {
     // rxjava
     compile "io.reactivex.rxjava2:rxjava:$RXJAVA_VERSION"
     compile "io.reactivex.rxjava2:rxandroid:$RXJAVA_VERSION"
-    compile "com.jakewharton.rxbinding:rxbinding:$RXBINDING_VERSION"
+    compile "com.jakewharton.rxbinding2:rxbinding:$RXBINDING_VERSION"
 //    compile "com.jakewharton.rxbinding:rxbinding-support-v4:$RXBINDING_VERSION"
 //    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$RXBINDING_VERSION"
 //    compile "com.jakewharton.rxbinding:rxbinding-design:$RXBINDING_VERSION"
@@ -61,8 +61,8 @@ dependencies {
     // retrofit
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
-//    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$RETROFIT_ADAPTER_FOR_RXJAVA2_VERSION"
+//    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$RETROFIT_ADAPTER_FOR_RXJAVA2_VERSION"
 
     // dagger (and related stuff)
     provided "javax.annotation:jsr250-api:$JAVAX_ANNOTATION_VERSION"

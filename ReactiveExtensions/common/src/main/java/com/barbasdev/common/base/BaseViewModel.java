@@ -14,6 +14,12 @@ public abstract class BaseViewModel extends BaseObservable implements Parcelable
 
     private WeakReference<Activity> activityWeakReference = new WeakReference<>(null);
 
+    /**
+     * Use to initialise things such as data structures or adapters in your viewmodel.
+     * This method should be called from {@link BaseFragment#setupViewModel()}.
+     */
+    public abstract void setup();
+
     public void onCreate() {}
     public void onStart() {}
     public void onResume() {}
