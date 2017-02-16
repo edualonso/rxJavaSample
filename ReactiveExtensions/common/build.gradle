@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'realm-android'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 25
@@ -33,7 +34,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile "junit:junit:$JUNIT_VERSION"
@@ -61,13 +62,26 @@ dependencies {
     // retrofit
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-//    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
     compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$RETROFIT_ADAPTER_FOR_RXJAVA2_VERSION"
 
     // dagger (and related stuff)
-    provided "javax.annotation:jsr250-api:$JAVAX_ANNOTATION_VERSION"
+//    provided "javax.annotation:jsr250-api:$JAVAX_ANNOTATION_VERSION"
+//    compile "com.google.dagger:dagger:$DAGGER2_VERSION"
+//    compile "javax.inject:javax.inject:$JAVAX_INJECT_VERSION"
+
+//    testApt "com.google.dagger:dagger-compiler:$DAGGER2_VERSION"
+//    apt "com.google.dagger:dagger-compiler:$DAGGER2_VERSION"
+//    compile "com.google.dagger:dagger:$DAGGER2_VERSION"
+//    compile "javax.inject:javax.inject:$JAVAX_INJECT_VERSION"
+//    provided "javax.annotation:jsr250-api:$JAVAX_ANNOTATION_VERSION"
+
+    testApt "com.google.dagger:dagger-compiler:$DAGGER2_VERSION"
+    apt "com.google.dagger:dagger-compiler:$DAGGER2_VERSION"
     compile "com.google.dagger:dagger:$DAGGER2_VERSION"
-    compile "javax.inject:javax.inject:$JAVAX_INJECT_VERSION"
+    provided "javax.annotation:jsr250-api:$JAVAX_ANNOTATION_VERSION"
+
+
+
 
     // okhttp
     testCompile "com.squareup.okhttp3:mockwebserver:$OKHTTP_VERSION"

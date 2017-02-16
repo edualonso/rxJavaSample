@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.barbasdev.common.R;
+import com.barbasdev.common.di.HelloService;
+
+import javax.inject.Inject;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -63,10 +66,15 @@ public class BaseActivity extends AppCompatActivity {
         return fragment;
     }
 
+    @Inject
+    public HelloService helloService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        BaseApplication.getGraph().inject(this);
     }
 
     /**
