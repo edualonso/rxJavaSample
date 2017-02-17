@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.barbasdev.tools.rxbinding.ProofOfConceptViewModel" />
+            type="com.barbasdev.reactiveextensions.main.proofofconcept.ProofOfConceptViewModel" />
 
     </data>
 

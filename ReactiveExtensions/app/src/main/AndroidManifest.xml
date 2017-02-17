@@ -5,22 +5,22 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.barbasdev.common.base.BaseApplication"
+        android:name="com.barbasdev.reactiveextensions.main.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".main.MainActivity">
+        <activity android:name="com.barbasdev.reactiveextensions.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.barbasdev.movies.MoviesActivity" />
-        <activity android:name="com.barbasdev.tools.rxbinding.ProofOfConceptActivity" />
+        <activity android:name="com.barbasdev.reactiveextensions.main.movies.MoviesActivity" />
+        <activity android:name="com.barbasdev.reactiveextensions.main.proofofconcept.ProofOfConceptActivity" />
 
     </application>
 
