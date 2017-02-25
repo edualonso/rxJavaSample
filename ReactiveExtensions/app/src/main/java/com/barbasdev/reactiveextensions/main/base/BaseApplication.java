@@ -27,6 +27,7 @@ public class BaseApplication extends Application {
 
         Timber.plant(new Timber.DebugTree());
         Realm.init(this);
+
 //        graph = DependencyGraphComponent.Initializer.init(this);
         graph = DaggerDependencyGraphComponent.builder()
                 .mainModule(new MainModule(this))
