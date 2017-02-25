@@ -3,6 +3,7 @@ package com.barbasdev.posts.datamodel.managers;
 import com.barbasdev.common.datalayer.model.managers.ResultsManager;
 import com.barbasdev.posts.datamodel.Post;
 import com.barbasdev.posts.network.PostsApiClient;
+import com.barbasdev.posts.network.PostsApiInterface;
 import com.barbasdev.posts.network.subscribers.PostResultsSubscriber;
 
 import java.util.List;
@@ -16,23 +17,16 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class PostsManager implements ResultsManager<List<Post>> {
 
-    private static PostsManager instance;
+    private static PostsApiInterface postsApiInterface = PostsApiClient.getInstance().getService();
 
-    public static PostsManager getInstance() {
-        if (instance == null) {
-            instance = new PostsManager();
-        }
-        return instance;
-    }
-
-    public void getResults(PostResultsSubscriber postsSubscriber) {
+    public static void getResults(PostResultsSubscriber postsSubscriber) {
         Observable<List<Post>> call = PostsApiClient.getInstance().getService().getUserPostsObservable(1);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(postsSubscriber);
     }
 
-    public Observable<List<Post>> getResults() {
+    public static Observable<List<Post>> getResults() {
         return PostsApiClient.getInstance().getService().getUserPostsObservable(1);
     }
 }

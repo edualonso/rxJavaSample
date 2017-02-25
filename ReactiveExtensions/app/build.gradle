@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-//apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
@@ -37,7 +38,13 @@ android {
 }
 
 dependencies {
-    // libs
+    // module dependencies
+    compile project(path: ':common')
+    compile project(path: ':movies')
+    compile project(path: ':posts')
+    compile project(path: ':tools')
+
+    // libraries
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // test
@@ -46,9 +53,8 @@ dependencies {
     })
     testCompile "junit:junit:$JUNIT_VERSION"
 
-    // module dependencies
-    compile project(path: ':common')
-    compile project(path: ':movies')
-    compile project(path: ':posts')
-    compile project(path: ':tools')
+    testApt "com.google.dagger:dagger-compiler:$DAGGER2_VERSION"
+    apt "com.google.dagger:dagger-compiler:$DAGGER2_VERSION"
+    compile "com.google.dagger:dagger:$DAGGER2_VERSION"
+    provided "javax.annotation:jsr250-api:$JAVAX_ANNOTATION_VERSION"
 }

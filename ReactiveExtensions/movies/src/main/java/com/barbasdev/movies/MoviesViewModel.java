@@ -58,7 +58,7 @@ public class MoviesViewModel extends BaseViewModel {
             @Override
             public ObservableSource<List<Movie>> apply(CharSequence charSequence) throws Exception {
                 Timber.e("Thread: " + Thread.currentThread().getName() + ", PREPARING QUERY (movies): " + charSequence);
-                return MoviesManager.getInstance().getMovieDetailsObservable(charSequence.toString());
+                return MoviesManager.getMovieDetailsObservable(charSequence.toString());
             }
         };
 

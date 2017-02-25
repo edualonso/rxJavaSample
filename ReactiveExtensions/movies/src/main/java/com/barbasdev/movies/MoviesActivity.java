@@ -11,6 +11,11 @@ import com.barbasdev.common.base.BaseActivity;
 public class MoviesActivity extends BaseActivity {
 
     @Override
+    public void injectDependencies() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

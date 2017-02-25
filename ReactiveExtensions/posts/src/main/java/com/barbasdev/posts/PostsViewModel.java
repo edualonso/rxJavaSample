@@ -37,7 +37,7 @@ public class PostsViewModel extends BaseViewModel {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                PostsManager.getInstance().getResults(new PostResultsSubscriber(PostsViewModel.this));
+//                PostsManager.getResults(new PostResultsSubscriber(PostsViewModel.this));
             }
         };
     }
