@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="2"
-    tools:context="com.barbasdev.common.base.BaseActivity">
+    tools:context="com.barbasdev.reactiveextensions.main.base.BaseActivity">
 
     <FrameLayout
         android:id="@+id/fragmentContainer"

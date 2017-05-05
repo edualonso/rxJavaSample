@@ -5,14 +5,10 @@ import android.os.Parcel;
 import com.barbasdev.common.datalayer.model.ApiResultAdapter;
 import com.barbasdev.movies.datamodel.Movie;
 import com.barbasdev.movies.datamodel.managers.MoviesManager;
-import com.barbasdev.reactiveextensions.main.base.BaseApplication;
 import com.barbasdev.reactiveextensions.main.base.BaseViewModel;
-import com.barbasdev.reactiveextensions.main.di.HelloService;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -30,9 +26,6 @@ import timber.log.Timber;
 
 public class MoviesViewModel extends BaseViewModel {
 
-    @Inject
-    HelloService helloService;
-
     private ApiResultAdapter adapter;
 
     public MoviesViewModel() {
@@ -41,10 +34,6 @@ public class MoviesViewModel extends BaseViewModel {
 
     @Override
     public void setup() {
-        BaseApplication.getGraph().inject(this);
-
-        Timber.e(helloService.greet("MoviesViewModel: LOLOLOLO"));
-
         adapter = new ApiResultAdapter();
     }
 

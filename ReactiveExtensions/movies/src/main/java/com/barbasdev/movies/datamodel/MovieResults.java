@@ -6,12 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.RealmObject;
-
 /**
  * Created by edu on 20/11/2016.
  */
-public class MovieResults extends RealmObject implements ApiResult {
+public class MovieResults implements ApiResult {
 
     @SerializedName("page")
     private Integer page;

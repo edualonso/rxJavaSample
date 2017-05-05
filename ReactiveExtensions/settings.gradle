@@ -1,1 +1,1 @@
-include ':app', ':movies', ':common', ':posts', ':tools'
+include ':app', ':movies', ':common'

@@ -6,13 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by edu on 20/11/2016.
  */
-public class Movie extends RealmObject implements ApiResult {
+public class Movie implements ApiResult {
 
     @SerializedName("poster_path")
     private String posterPath;
@@ -30,7 +27,6 @@ public class Movie extends RealmObject implements ApiResult {
     private List<Integer> genreIds = new ArrayList<Integer>();
 
     @SerializedName("id")
-    @PrimaryKey
     private Integer id;
 
     @SerializedName("original_title")

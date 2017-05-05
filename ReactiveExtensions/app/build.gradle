@@ -1,16 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
-//apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.barbasdev.reactiveextensions"
         minSdkVersion 19
         targetSdkVersion 25
+        applicationId "com.barbasdev.reactiveextensions"
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -38,24 +36,17 @@ android {
 }
 
 dependencies {
+
     // module dependencies
     compile project(path: ':common')
     compile project(path: ':movies')
-    compile project(path: ':posts')
-    compile project(path: ':tools')
 
     // libs
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // test
+    testCompile "junit:junit:$JUNIT_VERSION"
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile "junit:junit:$JUNIT_VERSION"
-
-    // dagger stuff
-    testApt "com.google.dagger:dagger-compiler:$DAGGER2_VERSION"
-    apt "com.google.dagger:dagger-compiler:$DAGGER2_VERSION"
-    compile "com.google.dagger:dagger:$DAGGER2_VERSION"
-    provided "javax.annotation:jsr250-api:$JAVAX_ANNOTATION_VERSION"
 }

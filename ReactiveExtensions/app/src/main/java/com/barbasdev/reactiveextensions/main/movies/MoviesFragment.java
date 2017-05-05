@@ -38,54 +38,6 @@ public class MoviesFragment extends BaseFragment<MoviesViewModel, FragmentMovies
         super.onViewCreated(view, savedInstanceState);
 
         viewModel.queryMovie(RxTextView.textChanges(binding.searchText));
-
-//        RxTextView.textChanges(binding.searchText)
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .filter(new Func1<CharSequence, Boolean>() {
-//                    @Override
-//                    public Boolean call(CharSequence charSequence) {
-//                        Timber.e("Thread: " + Thread.currentThread().getName() + ", FILTERING RESULTS (movies), length: " + charSequence.length());
-//                        if (charSequence.length() < 3) {
-//                            viewModel.getAdapter().clearApiResults();
-//                            return false;
-//                        }
-//                        return true;
-//                    }
-//                })
-//                .debounce(1000, TimeUnit.MILLISECONDS)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .switchMap(new Func1<CharSequence, Observable<List<Movie>>>() {
-//                    @Override
-//                    public Observable<List<Movie>> call(CharSequence charSequence) {
-//                        Timber.e("Thread: " + Thread.currentThread().getName() + ", PREPARING QUERY (movies): " + charSequence);
-//                        return MoviesManager.getInstance().getMovieDetailsObservable(charSequence.toString());
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<List<Movie>>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        Timber.e("-----------------------> onCompleted (movies)");
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Timber.e("-----------------------> onError (movies): " + e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Movie> movies) {
-//                        for (Movie movie : movies) {
-//                            Timber.e("Thread: " + Thread.currentThread().getName() + ", Movie: " + movie.getTitle());
-//                        }
-//
-//                        viewModel.getAdapter().addApiResults(movies, true);
-//                    }
-//
-//                });
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
